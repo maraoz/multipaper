@@ -1,0 +1,33 @@
+{
+  "name": "multipaper",
+  "description": "",
+  "version": "0.0.1",
+  "author": {
+    "name": "Manuel Araoz",
+    "email": "manu@bitpay.com"
+  },
+  "repository": "git://github.com/bitpay/multipaper.git",
+  "contributors": [
+    {
+      "name": "Federico Bond",
+      "email": "federico.bond@gmail.com"
+    },
+  ],
+  "license": "MIT",
+  "keywords": [
+    "bitcoin",
+    "paper",
+    "wallet",
+    "multisig",
+    "p2sh"
+  ],
+  "engines": {
+    "node": "*"
+  },
+  "scripts": {
+  },
+  "dependencies": {
+  },
+  "devDependencies": {
+  }
+}
