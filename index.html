@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title></title>
+    <title>Multi-signature address (P2SH) paper wallet</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
   </head>
@@ -17,49 +17,76 @@
    <div class="container">
 
       <div class="page-header">
-        <h1>Multi-signature address (P2SH) paper wallet using bitcore</h1>
+        <h1>Multi-signature address (P2SH) paper wallet using <a href="http://bitcore.io">bitcore</a></h1>
+        <h2><span class="label label-warning">WARNING</span> 
+          this is untested software, don't use to store actual bitcoins</h2>
       </div>
 
       <div class="row">
-        <div class="col-md-2">
-          <h2>Controls</h2>
-          <a id="gen" class="btn btn-info">Generate</a>
+        <div id='controls' class="col-md-1">
+          <h2><span class="glyphicon glyphicon-lock"></span></h2>
+          <button id="gen" class="btn btn-success">New</button>
+          <br />
+          <br />
+          <button id="print" class="btn" disabled="true">Print</button>
+          <br />
+          <br />
+          <button id="net" class="btn">Net</button>
         </div>
-        <div class="col-md-5">
-          <h2>Private keys</h2>
-          <div id="privQR"></div>
-          <div id="private"></div>
+        <div class="col-md-7">
+          <h2> Key pairs </h2>
+          <div id="private1"></div>
+          <div class="row">
+            <div class="col-md-4">
+              <div id="privQR1"></div>
+            </div>
+            <div class="col-md-4 pull-right">
+              <div id="pubQR1"></div>
+            </div>
+          </div>
+          <div id="public1" class=""></div>
+          <hr />
+
+          <div id="private2"></div>
+          <div class="row">
+            <div class="col-md-4">
+              <div id="privQR2"></div>
+            </div>
+            <div class="col-md-4 pull-right">
+              <div id="pubQR2"></div>
+            </div>
+          </div>
+          <div id="public2" class=""></div>
+          <hr />
+
+          <div id="private3"></div>
+          <div class="row">
+            <div class="col-md-4">
+              <div id="privQR3"></div>
+            </div>
+            <div class="col-md-4 pull-right">
+              <div id="pubQR3"></div>
+            </div>
+          </div>
+          <div id="public3" class=""></div>
         </div>
-        <div class="col-md-5">
+
+
+
+
+
+
+
+
+
+        <div class="col-md-4">
           <h2>P2SH Address</h2>
           <div id="pubQR"></div>
           <div id="public"></div>
         </div>
       </div>
-
     </div>
 
-    <script>
-      $(document).ready(function(){
-        var bitcore = require('bitcore');
-        bitcore.buffertools.extend();
-        var Key = bitcore.Key;
-        var util = bitcore.util;
-        var privQR = new QRCode("privQR");
-        var pubQR = new QRCode("pubQR");
-        $('#gen').click(function() {
-          var k = Key.generateSync();
-          var pubKeyHash = util.sha256ripe160(k.public).toHex();
-          var privHex = k.private.toHex();
-          privQR.makeCode(privHex);
-          pubQR.makeCode(pubKeyHash);
-          $('#private').text(privHex);
-          $('#public').text(pubKeyHash);
-        });
-      });
-    </script>
-
-
-
+    <script src="index.js"></script>
   </body>
 </html>
