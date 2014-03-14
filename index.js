@@ -9,9 +9,10 @@ $(document).ready(function() {
   var Key = bitcore.Key;
   var util = bitcore.util;
   var networks = bitcore.networks;
-  var network = networks.livenet;
+  var network = networks.testnet;
   var Address = bitcore.Address;
   var Script = bitcore.Script;
+  var PrivateKey = bitcore.PrivateKey;
 
   var getPubKeys = function(ks) {
     return ks.map(function(k){
@@ -48,25 +49,28 @@ $(document).ready(function() {
 
   var privQRs = [];
   var pubQRs = [];
+  var PRIV_SIZE = 128;
+  var PUB_SIZE = 128;
+  var ADDR_SIZE = 256;
   for (var i = 0; i<N; i++) {
     var privQR = new QRCode("privQR"+(i+1), {
-      width: 96,
-      height: 96,
+      width: PRIV_SIZE,
+      height: PRIV_SIZE,
       colorDark : "#d9534f",
       colorLight : "#ffffff",
     });
     privQRs.push(privQR);
     var pubQR = new QRCode("pubQR"+(i+1), {
-      width: 96,
-      height: 96,
+      width: PUB_SIZE,
+      height: PUB_SIZE,
       colorDark : "#5cb85c",
       colorLight : "#ffffff",
     });
     pubQRs.push(pubQR);
   }
   var pubQR = new QRCode("pubQR", {
-    width: 256,
-    height: 256,
+    width: ADDR_SIZE,
+    height: ADDR_SIZE,
   });
   $('#gen').click(function() {
     $('#print').prop('disabled', false);
@@ -77,7 +81,8 @@ $(document).ready(function() {
     }
     for (var i = 0; i<N; i++) {
       var k = ks[i];
-      var privHex = k.private.toHex();
+      var pk = new PrivateKey(network.keySecret, k.private, k.compressed);
+      var privHex = pk.toString();
       var pubHex = k.public.toHex();
       privQRs[i].makeCode(privHex);
       pubQRs[i].makeCode(pubHex);
@@ -87,6 +92,7 @@ $(document).ready(function() {
     var redeemScript = getRedeemScript(ks);
     var hash = util.sha256ripe160(redeemScript.buffer);
     var addr = new Address(network.addressScript, hash);
+    $('#netname').text(network === networks.livenet ? 'livenet' : 'testnet');
     pubQR.makeCode(addr.toString());
     $('#public').text(addr.toString());
   });
@@ -94,6 +100,7 @@ $(document).ready(function() {
   $('#net').click(function() {
     network = network === networks.livenet? networks.testnet : networks.livenet;
     $('#gen').click();
+    $('#net').toggleClass('btn-success btn-warning');
   });
   $('#print').click(function() {
     $('#controls').hide();
