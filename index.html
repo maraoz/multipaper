@@ -6,10 +6,60 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
   </head>
   <body>
-    <script src="../browser/bundle.js"></script>
+    <script src="node_modules/bitcore/browser/bundle.js"></script>
+    <script type="text/javascript" src="qrcode.js"></script>
+    <script type="text/javascript" src="jquery.js"></script>
+
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+
+
+   <div class="container">
+
+      <div class="page-header">
+        <h1>Multi-signature address (P2SH) paper wallet using bitcore</h1>
+      </div>
+
+      <div class="row">
+        <div class="col-md-2">
+          <h2>Controls</h2>
+          <a id="gen" class="btn btn-info">Generate</a>
+        </div>
+        <div class="col-md-5">
+          <h2>Private keys</h2>
+          <div id="privQR"></div>
+          <div id="private"></div>
+        </div>
+        <div class="col-md-5">
+          <h2>P2SH Address</h2>
+          <div id="pubQR"></div>
+          <div id="public"></div>
+        </div>
+      </div>
+
+    </div>
+
     <script>
-      var bitcore = require('bitcore');
-      alert(bitcore.Address);
+      $(document).ready(function(){
+        var bitcore = require('bitcore');
+        bitcore.buffertools.extend();
+        var Key = bitcore.Key;
+        var util = bitcore.util;
+        var privQR = new QRCode("privQR");
+        var pubQR = new QRCode("pubQR");
+        $('#gen').click(function() {
+          var k = Key.generateSync();
+          var pubKeyHash = util.sha256ripe160(k.public).toHex();
+          var privHex = k.private.toHex();
+          privQR.makeCode(privHex);
+          pubQR.makeCode(pubKeyHash);
+          $('#private').text(privHex);
+          $('#public').text(pubKeyHash);
+        });
+      });
     </script>
+
+
+
   </body>
 </html>

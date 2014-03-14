@@ -1,17 +1,17 @@
 {
   "name": "multipaper",
-  "description": "",
+  "description": "Multi-signature address (P2SH) paper wallet using bitcore",
   "version": "0.0.1",
   "author": {
     "name": "Manuel Araoz",
     "email": "manu@bitpay.com"
   },
-  "repository": "git://github.com/bitpay/multipaper.git",
+  "repository": "git://github.com/maraoz/multipaper.git",
   "contributors": [
     {
       "name": "Federico Bond",
       "email": "federico.bond@gmail.com"
-    },
+    }
   ],
   "license": "MIT",
   "keywords": [
@@ -24,10 +24,9 @@
   "engines": {
     "node": "*"
   },
-  "scripts": {
-  },
+  "scripts": {},
   "dependencies": {
+    "bitcore": "git://github.com/bitpay/bitcore.git"
   },
-  "devDependencies": {
-  }
+  "devDependencies": {}
 }
